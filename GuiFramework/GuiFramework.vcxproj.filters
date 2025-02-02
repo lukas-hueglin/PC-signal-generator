@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{05e9d3f6-1a7a-4205-9b02-332239205b41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Platform">
+      <UniqueIdentifier>{ebfe926e-5c1a-4b6a-a373-84ec8365c71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{5bb4ecaa-e698-4dca-b0b6-7bdc1129d1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common">
+      <UniqueIdentifier>{251ddbdf-f9bc-45b6-addb-400b52bdefe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Platform\Win32">
+      <UniqueIdentifier>{ee6b2179-785c-4c72-ac72-de40266798e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Public">
+      <UniqueIdentifier>{49d79099-eaf6-4a92-9d11-c816e7ef9e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Private">
+      <UniqueIdentifier>{3da1b40d-9b80-42a8-ada8-b6af33b55936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Public">
+      <UniqueIdentifier>{9ac105a2-e643-4ffd-bd91-1210e318de0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Private">
+      <UniqueIdentifier>{1699c4bd-dd8d-4999-b141-8fb79af58d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Platform\Win32\Private">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source\Platform\Win32\Public">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source\Pch">
+      <UniqueIdentifier>{77331157-f222-4c40-a416-40c7be33eef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Style">
+      <UniqueIdentifier>{097bfe29-6e94-4f04-b0f9-fb300ff68739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Style\Public">
+      <UniqueIdentifier>{2a5adbf6-5881-4151-bc10-a5616a86be77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Style\Private">
+      <UniqueIdentifier>{bd088ff9-70f0-4038-a9de-0ab98e5cfeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Widgets">
+      <UniqueIdentifier>{7f489dde-c6d2-4c08-ae60-d3bc0c9805dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Widgets\Public">
+      <UniqueIdentifier>{ef4d9f27-58a4-4aab-839c-3eea00969851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Widgets\Private">
+      <UniqueIdentifier>{5bc4c026-85bb-4161-8e71-8260490d547c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Reflection">
+      <UniqueIdentifier>{18898b45-783f-4da4-ad0a-e2e8f595d2d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Reflection\Public">
+      <UniqueIdentifier>{95584ef3-79ad-4312-8ff5-3a68b3a7fec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common\Reflection\Private">
+      <UniqueIdentifier>{d9deb7cd-a843-4e05-9961-89c5287a8717}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Gui.h">
+      <Filter>Source\Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\Application.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\IApplication.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32Application.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Style\Color.h">
+      <Filter>Source\Style\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\MathUtils.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\IGraphics.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\Graphics2D.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\IGraphics2D.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\IWindow.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\Window.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32Window.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32Utils.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Style\Style.h">
+      <Filter>Source\Style\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32MainWindow.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\MainWindow.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32Graphics2D.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Widget.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Label.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\LinearLayout.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Frame.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Layout.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\WidgetUtils.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Point2D.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Rect.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Size.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\EventUtils.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\TextBox.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Slider.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ComboBox.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\DropDown.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\XmlHandler.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core\IFunctional.h">
+      <Filter>Source\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Reflection\Field.h">
+      <Filter>Source\Common\Reflection\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Reflection\Internal.h">
+      <Filter>Source\Common\Reflection\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Plot.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\PlotSeries.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\PlotSeries1D.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Style\WidgetStyle.h">
+      <Filter>Source\Style\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Style\WidgetStyleBuilder.h">
+      <Filter>Source\Style\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\Button.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\AButtonImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\AFrameImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ALabelImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ASliderImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ATextBoxImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\AWidgetImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32ButtonImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32FrameImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32LabelImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32SliderImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32TextBoxImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32WidgetImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Style\Palette.h">
+      <Filter>Source\Style\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\APlotImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\APlotSeries1DImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32PlotImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32PlotSeries1DImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ALayoutImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32LayoutImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Common\Signal.h">
+      <Filter>Source\Common\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\GridLayout.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\GroupBox.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\ACheckBoxImpl.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Widgets\CheckBox.h">
+      <Filter>Source\Widgets\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Platform\Win32\Win32CheckBoxImpl.h">
+      <Filter>Source\Platform\Win32\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Platform\Win32\Win32Application.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\IApplication.cpp">
+      <Filter>Source\Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Style\Color.cpp">
+      <Filter>Source\Style\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\MathUtils.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\IWindow.cpp">
+      <Filter>Source\Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32Graphics2D.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32Utils.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Style\Style.cpp">
+      <Filter>Source\Style\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32MainWindow.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32Window.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Widget.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Button.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Label.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\LinearLayout.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Frame.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Layout.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\WidgetUtils.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Point2D.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Rect.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Size.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\EventUtils.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\TextBox.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Slider.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\ComboBox.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\DropDown.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\XmlHandler.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\IFunctional.cpp">
+      <Filter>Source\Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Reflection\Field.cpp">
+      <Filter>Source\Common\Reflection\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Reflection\Internal.cpp">
+      <Filter>Source\Common\Reflection\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\Plot.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\PlotSeries.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\PlotSeries1D.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Style\WidgetStyle.cpp">
+      <Filter>Source\Style\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Style\WidgetStyleBuilder.cpp">
+      <Filter>Source\Style\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32ButtonImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32FrameImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32LabelImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32SliderImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32TextBoxImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32WidgetImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Style\Palette.cpp">
+      <Filter>Source\Style\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32PlotImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32PlotSeries1DImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32LayoutImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Signal.cpp">
+      <Filter>Source\Common\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\GridLayout.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\GroupBox.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\CheckBox.cpp">
+      <Filter>Source\Widgets\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\Win32\Win32CheckBoxImpl.cpp">
+      <Filter>Source\Platform\Win32\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Gui.cpp">
+      <Filter>Source\Pch</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

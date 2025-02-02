@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugUI|x64">
+      <Configuration>DebugUI</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{d7f71e9d-e15b-4c26-9f1f-fe373b52d61c}</ProjectGuid>
+    <RootNamespace>GuiFramework</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUI|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugUI|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\Build\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(ProjectName)\Intermediate\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugUI|x64'">
+    <OutDir>$(SolutionDir)\Build\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(ProjectName)\Intermediate\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\Build\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\$(ProjectName)\Intermediate\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEBUG;WIN32;BUILD_DLL;PROJECT_NAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>Gui.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\GuiFramework.dll  $(SolutionDir)\Build\BlankProject\$(Configuration)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugUI|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEBUG;DEBUG_UI;WIN32;BUILD_DLL;PROJECT_NAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>Gui.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\GuiFramework.dll  $(SolutionDir)\Build\BlankProject\$(Configuration)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;WIN32;BUILD_DLL;PROJECT_NAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>Gui.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)\GuiFramework.dll  $(SolutionDir)\Build\BlankProject\$(Configuration)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Common\EventUtils.h" />
+    <ClInclude Include="Include\Common\MathUtils.h" />
+    <ClInclude Include="Include\Common\Point2D.h" />
+    <ClInclude Include="Include\Common\Rect.h" />
+    <ClInclude Include="Include\Common\Reflection\Field.h" />
+    <ClInclude Include="Include\Common\Reflection\Internal.h" />
+    <ClInclude Include="Include\Common\Signal.h" />
+    <ClInclude Include="Include\Common\Size.h" />
+    <ClInclude Include="Include\Common\WidgetUtils.h" />
+    <ClInclude Include="Include\Common\XmlHandler.h" />
+    <ClInclude Include="Include\Core\Application.h" />
+    <ClInclude Include="Include\Core\IFunctional.h" />
+    <ClInclude Include="Include\Core\Graphics2D.h" />
+    <ClInclude Include="Include\Core\IApplication.h" />
+    <ClInclude Include="Include\Core\IGraphics.h" />
+    <ClInclude Include="Include\Core\IGraphics2D.h" />
+    <ClInclude Include="Include\Core\IWindow.h" />
+    <ClInclude Include="Include\Core\MainWindow.h" />
+    <ClInclude Include="Include\Core\Window.h" />
+    <ClInclude Include="Include\Gui.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32Application.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32ButtonImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32CheckBoxImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32FrameImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32Graphics2D.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32LabelImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32LayoutImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32MainWindow.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32PlotImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32PlotSeries1DImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32SliderImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32TextBoxImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32Utils.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32WidgetImpl.h" />
+    <ClInclude Include="Include\Platform\Win32\Win32Window.h" />
+    <ClInclude Include="Include\Style\Color.h" />
+    <ClInclude Include="Include\Style\Palette.h" />
+    <ClInclude Include="Include\Style\Style.h" />
+    <ClInclude Include="Include\Style\WidgetStyle.h" />
+    <ClInclude Include="Include\Style\WidgetStyleBuilder.h" />
+    <ClInclude Include="Include\Widgets\ACheckBoxImpl.h" />
+    <ClInclude Include="Include\Widgets\ALayoutImpl.h" />
+    <ClInclude Include="Include\Widgets\APlotImpl.h" />
+    <ClInclude Include="Include\Widgets\APlotSeries1DImpl.h" />
+    <ClInclude Include="Include\Widgets\Button.h" />
+    <ClInclude Include="Include\Widgets\AButtonImpl.h" />
+    <ClInclude Include="Include\Widgets\AFrameImpl.h" />
+    <ClInclude Include="Include\Widgets\ALabelImpl.h" />
+    <ClInclude Include="Include\Widgets\ASliderImpl.h" />
+    <ClInclude Include="Include\Widgets\ATextBoxImpl.h" />
+    <ClInclude Include="Include\Widgets\AWidgetImpl.h" />
+    <ClInclude Include="Include\Widgets\CheckBox.h" />
+    <ClInclude Include="Include\Widgets\ComboBox.h" />
+    <ClInclude Include="Include\Widgets\DropDown.h" />
+    <ClInclude Include="Include\Widgets\Frame.h" />
+    <ClInclude Include="Include\Widgets\GridLayout.h" />
+    <ClInclude Include="Include\Widgets\GroupBox.h" />
+    <ClInclude Include="Include\Widgets\Label.h" />
+    <ClInclude Include="Include\Widgets\Layout.h" />
+    <ClInclude Include="Include\Widgets\LinearLayout.h" />
+    <ClInclude Include="Include\Widgets\Plot.h" />
+    <ClInclude Include="Include\Widgets\PlotSeries.h" />
+    <ClInclude Include="Include\Widgets\PlotSeries1D.h" />
+    <ClInclude Include="Include\Widgets\Slider.h" />
+    <ClInclude Include="Include\Widgets\TextBox.h" />
+    <ClInclude Include="Include\Widgets\Widget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Common\EventUtils.cpp" />
+    <ClCompile Include="Source\Common\MathUtils.cpp" />
+    <ClCompile Include="Source\Common\Point2D.cpp" />
+    <ClCompile Include="Source\Common\Rect.cpp" />
+    <ClCompile Include="Source\Common\Reflection\Field.cpp" />
+    <ClCompile Include="Source\Common\Reflection\Internal.cpp" />
+    <ClCompile Include="Source\Common\Signal.cpp" />
+    <ClCompile Include="Source\Common\Size.cpp" />
+    <ClCompile Include="Source\Common\WidgetUtils.cpp" />
+    <ClCompile Include="Source\Common\XmlHandler.cpp" />
+    <ClCompile Include="Source\Core\IFunctional.cpp" />
+    <ClCompile Include="Source\Core\IApplication.cpp" />
+    <ClCompile Include="Source\Core\IWindow.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32Application.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32ButtonImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32CheckBoxImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32FrameImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32Graphics2D.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32LabelImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32LayoutImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32MainWindow.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32PlotImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32PlotSeries1DImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32SliderImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32TextBoxImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32Utils.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32WidgetImpl.cpp" />
+    <ClCompile Include="Source\Platform\Win32\Win32Window.cpp" />
+    <ClCompile Include="Source\Style\Color.cpp" />
+    <ClCompile Include="Source\Style\Palette.cpp" />
+    <ClCompile Include="Source\Style\Style.cpp" />
+    <ClCompile Include="Source\Style\WidgetStyle.cpp" />
+    <ClCompile Include="Source\Style\WidgetStyleBuilder.cpp" />
+    <ClCompile Include="Source\Widgets\Button.cpp" />
+    <ClCompile Include="Source\Widgets\CheckBox.cpp" />
+    <ClCompile Include="Source\Widgets\ComboBox.cpp" />
+    <ClCompile Include="Source\Widgets\DropDown.cpp" />
+    <ClCompile Include="Source\Widgets\Frame.cpp" />
+    <ClCompile Include="Source\Widgets\GridLayout.cpp" />
+    <ClCompile Include="Source\Widgets\GroupBox.cpp" />
+    <ClCompile Include="Source\Widgets\Label.cpp" />
+    <ClCompile Include="Source\Widgets\Layout.cpp" />
+    <ClCompile Include="Source\Widgets\LinearLayout.cpp" />
+    <ClCompile Include="Source\Widgets\Plot.cpp" />
+    <ClCompile Include="Source\Widgets\PlotSeries.cpp" />
+    <ClCompile Include="Source\Widgets\PlotSeries1D.cpp" />
+    <ClCompile Include="Source\Widgets\Slider.cpp" />
+    <ClCompile Include="Source\Widgets\TextBox.cpp" />
+    <ClCompile Include="Source\Widgets\Widget.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Gui.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
