@@ -76,7 +76,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>D:\repos\gui-framework\BlankProject\Include;D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\PCSignalGenerator\Include;$(SolutionDir)\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,7 +92,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>D:\repos\gui-framework\BlankProject\Include;D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\PCSignalGenerator\Include;$(SolutionDir)\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +110,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>D:\repos\gui-framework\BlankProject\Include;D:\repos\gui-framework\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\PCSignalGenerator\Include;$(SolutionDir)\GuiFramework\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,17 +121,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Application.cpp" />
-    <ClCompile Include="Source\Functional.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GuiFramework\GuiFramework.vcxproj">
       <Project>{d7f71e9d-e15b-4c26-9f1f-fe373b52d61c}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Application.h" />
+    <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\Functional.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\App.h" />
     <ClInclude Include="Include\Functional.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

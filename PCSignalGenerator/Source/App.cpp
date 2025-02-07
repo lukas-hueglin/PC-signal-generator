@@ -1,5 +1,5 @@
 #include "Gui.h"
-#include "Application.h"
+#include "App.h"
 
 #include "Core/MainWindow.h"
 #include "Widgets/Button.h"

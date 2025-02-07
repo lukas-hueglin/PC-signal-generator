@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GuiFramework", "GuiFramework\GuiFramework.vcxproj", "{D7F71E9D-E15B-4C26-9F1F-FE373B52D61C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlankProject", "BlankProject\BlankProject.vcxproj", "{7E7AA618-9233-4D99-8217-EA01F6482F79}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCSignalGenerator", "PCSignalGenerator\PCSignalGenerator.vcxproj", "{7E7AA618-9233-4D99-8217-EA01F6482F79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
