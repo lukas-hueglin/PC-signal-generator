@@ -5,14 +5,14 @@
 #include <string>
 #include <vector>
 
-App::App(int argc, char** argv) : Application(argc, argv), mp_functional(new Functional()) {
+App::App(int argc, char** argv) : Application(argc, argv), mp_sigGen(new SignalGenerator()) {
 
-	REGISTER_FUNCTIONAL(mp_functional)
+	REGISTER_FUNCTIONAL(mp_sigGen)
 }
 
 App::~App() {
 
-	delete mp_functional;
+	delete mp_sigGen;
 
 	delete mp_window;
 
@@ -32,6 +32,8 @@ App::~App() {
 	delete mp_sigGenLayout;
 	delete mp_oscLayout;
 	delete mp_freqResponseLayout;
+
+	delete mp_enableCheckBox;
 
 	delete mp_waveformLabel;
 	delete mp_waveformComboBox;
@@ -76,6 +78,13 @@ void App::initUI() {
 	mp_bodePhase->setFillMode(FillMode::Expand);
 
 	// create parameters
+
+	mp_enableCheckBox = new CheckBox(mp_window, L"Enable Output", mp_sigGen->getOutput());
+	mp_enableCheckBox->setMargin(10.0f);
+	mp_enableCheckBox->setPadding(10.0f);
+	connect<CheckBox, SignalGenerator, bool>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableCheckBox->onStateChanged);
+
+
 	mp_waveformLabel = new Label(mp_window, L"Waveform");
 	mp_waveformLabel->setMargin(10.0f);
 	mp_waveformLabel->setPadding(10.0f);
@@ -84,50 +93,57 @@ void App::initUI() {
 	mp_waveformComboBox->setMargin(10.0f);
 	mp_waveformComboBox->setPadding(10.0f);
 
+	// connect ComboBox!!
+	//connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->)
+
 
 	mp_frequencyLabel = new Label(mp_window, L"Frequency");
 	mp_frequencyLabel->setMargin(10.0f);
 	mp_frequencyLabel->setPadding(10.0f);
 
-	mp_frequencySlider = new Slider<float>(mp_window, 1000, 0, 20000);
+	mp_frequencySlider = new Slider<float>(mp_window, mp_sigGen->getFrequency(), 0, 20000);
 	mp_frequencySlider->setMargin(10.0f);
 	mp_frequencySlider->setPadding(10.0f);
 	mp_frequencySlider->setSuffix(L" Hz");
+	connect<Slider<float>, SignalGenerator, float>(mp_sigGen, &SignalGenerator::setFrequency, mp_frequencySlider->onValueChanged);
 
 
 	mp_amplitudeLabel = new Label(mp_window, L"Amplitude");
 	mp_amplitudeLabel->setMargin(10.0f);
 	mp_amplitudeLabel->setPadding(10.0f);
 
-	mp_amplitudeSlider = new Slider<float>(mp_window, 1, 0, 5);
+	mp_amplitudeSlider = new Slider<float>(mp_window, mp_sigGen->getAmplitude(), 0, 5);
 	mp_amplitudeSlider->setMargin(10.0f);
 	mp_amplitudeSlider->setPadding(10.0f);
 	mp_amplitudeSlider->setSuffix(L" V");
+	connect<Slider<float>, SignalGenerator, float>(mp_sigGen, &SignalGenerator::setAmplitude, mp_amplitudeSlider->onValueChanged);
 
 
 	mp_dutyCycleLabel = new Label(mp_window, L"DutyCycle");
 	mp_dutyCycleLabel->setMargin(10.0f);
 	mp_dutyCycleLabel->setPadding(10.0f);
 
-	mp_dutyCycleSlider = new Slider<int>(mp_window, 50, 0, 100);
+	mp_dutyCycleSlider = new Slider<int>(mp_window, mp_sigGen->getDutyCycle(), 0, 100);
 	mp_dutyCycleSlider->setMargin(10.0f);
 	mp_dutyCycleSlider->setPadding(10.0f);
 	mp_dutyCycleSlider->setSuffix(L" %");
+	connect<Slider<int>, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setDutyCycle, mp_dutyCycleSlider->onValueChanged);
 
 
 	// create parameter GridLayouts
-	mp_sigGenLayout = new GridLayout(mp_window, 4, 2);
+	mp_sigGenLayout = new GridLayout(mp_window, 5, 2);
 	mp_oscLayout = new GridLayout(mp_window, 4, 2);
 	mp_freqResponseLayout = new GridLayout(mp_window, 4, 2);
 
-	mp_sigGenLayout->addFrame(mp_waveformLabel, 0, 0);
-	mp_sigGenLayout->addFrame(mp_waveformComboBox, 0, 1);
-	mp_sigGenLayout->addFrame(mp_frequencyLabel, 1, 0);
-	mp_sigGenLayout->addFrame(mp_frequencySlider, 1, 1);
-	mp_sigGenLayout->addFrame(mp_amplitudeLabel, 2, 0);
-	mp_sigGenLayout->addFrame(mp_amplitudeSlider, 2, 1);
-	mp_sigGenLayout->addFrame(mp_dutyCycleLabel, 3, 0);
-	mp_sigGenLayout->addFrame(mp_dutyCycleSlider, 3, 1);
+	mp_sigGenLayout->addFrame(mp_enableCheckBox, 0, 0);
+	mp_sigGenLayout->addFrame(mp_waveformLabel, 1, 0);
+	mp_sigGenLayout->addFrame(mp_waveformComboBox, 1, 1);
+	mp_sigGenLayout->addFrame(mp_frequencyLabel, 2, 0);
+	mp_sigGenLayout->addFrame(mp_frequencySlider, 2, 1);
+	mp_sigGenLayout->addFrame(mp_amplitudeLabel, 3, 0);
+	mp_sigGenLayout->addFrame(mp_amplitudeSlider, 3, 1);
+	mp_sigGenLayout->addFrame(mp_dutyCycleLabel, 4, 0);
+	mp_sigGenLayout->addFrame(mp_dutyCycleSlider, 4, 1);
 
 	// create GroupBoxes
 	mp_sigGenGroup = new GroupBox(mp_window, mp_sigGenLayout, L"Signal Generator");

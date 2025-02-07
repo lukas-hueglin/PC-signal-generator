@@ -1,5 +1,4 @@
 #include "App.h"
-#include "Functional.h"
 
 int main(int argc, char** argv) {
 	

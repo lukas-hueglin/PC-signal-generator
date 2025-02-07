@@ -9,13 +9,15 @@
 #include "Widgets/Label.h"
 #include "Widgets/ComboBox.h"
 #include "Widgets/Slider.h"
+#include "Widgets/Button.h"
+#include "Widgets/CheckBox.h"
 
-#include "Functional.h"
+#include "SignalGenerator.h"
 
 class App : public Application {
 
 private:
-	Functional* mp_functional;
+	SignalGenerator* mp_sigGen;
 
 	MainWindow* mp_window;
 
@@ -35,6 +37,8 @@ private:
 	GridLayout* mp_sigGenLayout;
 	GridLayout* mp_oscLayout;
 	GridLayout* mp_freqResponseLayout;
+
+	CheckBox* mp_enableCheckBox;
 
 	Label* mp_waveformLabel;
 	ComboBox* mp_waveformComboBox;
