@@ -13,11 +13,12 @@ private:
 public:
 	ComboBox(Window* p_parent, std::vector<std::wstring> elements, WidgetStyle style = Style::Default());
 
+public:
+	Signal<int> onValueChanged;
+
 private:
 	void createDropDown();
 	void closeDropDown(int id);
-
-	Signal<int> onValueChanged;
 
 	// make DropDown a friend class
 	friend class DropDown;
