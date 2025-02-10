@@ -76,9 +76,6 @@ SignalGenerator::SignalGenerator() : m_output(false), m_phase(0.0f) {
 	// write buffer
 	hr = mp_audioRenderClient->ReleaseBuffer(m_bufferSize, 0);
 	assert(SUCCEEDED(hr));
-
-	// plot waveform
-	calculatePlotWaveform();
 }
 
 SignalGenerator::~SignalGenerator() {
@@ -196,6 +193,14 @@ void SignalGenerator::onTick(float deltaTime) {
 	hr = mp_audioRenderClient->ReleaseBuffer(availableFrames, 0);
 	assert(SUCCEEDED(hr));
 }
+
+void SignalGenerator::onBegin() {
+
+	// plot waveform
+	calculatePlotWaveform();
+}
+
+void SignalGenerator::onClose() { }
 
 void SignalGenerator::fillWaveformBuffer(byte* p_buffer, unsigned int nSamples) {
 

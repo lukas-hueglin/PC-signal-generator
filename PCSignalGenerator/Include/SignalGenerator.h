@@ -51,7 +51,11 @@ public:
 	Signal<> onPlotUpdate;
 
 private:
-	void onTick(float deltaTime);
+	void onTick(float deltaTime) override;
+	void onBegin() override;
+	void onClose() override;
+
+
 
 	void fillWaveformBuffer(byte* p_buffer, unsigned int nSamples);
 	void calculatePlotWaveform();
