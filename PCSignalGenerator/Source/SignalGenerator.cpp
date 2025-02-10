@@ -10,7 +10,7 @@ const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
 const IID IID_IAudioClient = __uuidof(IAudioClient);
 const IID IID_IAudioRenderClient = __uuidof(IAudioRenderClient);
 
-SignalGenerator::SignalGenerator() : m_output(false), m_waveformType(0), m_phase(0.0f) {
+SignalGenerator::SignalGenerator() : m_output(false), m_phase(0.0f) {
 
 	// add members to reflection
 	ADD_FIELD(int, m_waveformType);
@@ -63,7 +63,6 @@ SignalGenerator::SignalGenerator() : m_output(false), m_waveformType(0), m_phase
 	hr = mp_audioClient->GetBufferSize(&m_bufferSize);
 	assert(SUCCEEDED(hr));
 
-
 	// create buffer
 	byte* p_buffer;
 
@@ -77,6 +76,9 @@ SignalGenerator::SignalGenerator() : m_output(false), m_waveformType(0), m_phase
 	// write buffer
 	hr = mp_audioRenderClient->ReleaseBuffer(m_bufferSize, 0);
 	assert(SUCCEEDED(hr));
+
+	// plot waveform
+	calculatePlotWaveform();
 }
 
 SignalGenerator::~SignalGenerator() {
@@ -109,6 +111,7 @@ void SignalGenerator::enableOutput(bool output) {
 void SignalGenerator::setWaveformType(int waveformType) {
 
 	m_waveformType = waveformType;
+	calculatePlotWaveform();
 }
 
 void SignalGenerator::setFrequency(float frequency) {
@@ -119,11 +122,23 @@ void SignalGenerator::setFrequency(float frequency) {
 void SignalGenerator::setAmplitude(float amplitude) {
 
 	m_amplitude = amplitude;
+	calculatePlotWaveform();
 }
 
 void SignalGenerator::setDutyCycle(int dutyCycle) {
 
 	m_dutyCycle = dutyCycle;
+	calculatePlotWaveform();
+}
+
+float* SignalGenerator::getPlotData() {
+
+	return mpa_plotData;
+}
+
+int SignalGenerator::getPlotDataSize() {
+
+	return SIGGEN_PLOT_SIZE;
 }
 
 bool SignalGenerator::getOutput() {
@@ -167,24 +182,19 @@ void SignalGenerator::onTick(float deltaTime) {
 	// calculate available space
 	availableFrames = m_bufferSize - padding;
 
-	// if one quarters of buffer is used up, refill
-	if (availableFrames > 0.1 * m_bufferSize) {
+	// create buffer
+	BYTE* p_buffer;
 
-		// create buffer
-		BYTE* p_buffer;
+	// get all available buffer space
+	hr = mp_audioRenderClient->GetBuffer(availableFrames, &p_buffer);
+	assert(SUCCEEDED(hr));
 
-		// get all available buffer space
-		hr = mp_audioRenderClient->GetBuffer(availableFrames, &p_buffer);
-		assert(SUCCEEDED(hr));
+	// fill buffer
+	fillWaveformBuffer(p_buffer, availableFrames);
 
-		// fill buffer
-		fillWaveformBuffer(p_buffer, availableFrames);
-		DEBUG_PRINTLN("REFRESH!")
-
-		// write buffer
-		hr = mp_audioRenderClient->ReleaseBuffer(availableFrames, 0);
-		assert(SUCCEEDED(hr));
-	}
+	// write buffer
+	hr = mp_audioRenderClient->ReleaseBuffer(availableFrames, 0);
+	assert(SUCCEEDED(hr));
 }
 
 void SignalGenerator::fillWaveformBuffer(byte* p_buffer, unsigned int nSamples) {
@@ -192,40 +202,146 @@ void SignalGenerator::fillWaveformBuffer(byte* p_buffer, unsigned int nSamples) 
 	// cast to float
 	float* p_floatBuffer = (float*)p_buffer;
 
+	// calculate proportion of one sample
+	float proportionSample = m_frequency / mp_format->nSamplesPerSec;
+
 	switch (m_waveformType) {
-
-	case 0: // sine waveform
-	{
-		// calculate radians per sample
-		float radPerSample = 2 * std::numbers::pi * m_frequency / mp_format->nSamplesPerSec;
-
+	case 0: { // sine waveform
+	
 		for (int i = 0; i < nSamples; ++i) {
 
 			// calculate value
-			float value = m_amplitude * sin(radPerSample * i + m_phase);
+			float time = proportionSample * i + m_phase;
+			float value = m_amplitude * sin(2 * std::numbers::pi * time);
 
 			for (int c = 0; c < mp_format->nChannels; ++c) {
 				p_floatBuffer[mp_format->nChannels * i + c] = value;
 			}
 		}
 
-		// calculate new phase
-		m_phase += radPerSample * nSamples;
-		int turns = m_phase / (2 * std::numbers::pi);
-		m_phase -= turns * 2 * std::numbers::pi;
-
-		return;
+		break;
 	}
-	case 1: // rectangular waveform
+	case 1: { // rectangular waveform
 
-		return;
+		for (int i = 0; i < nSamples; ++i) {
 
-	case 2: // triangular waveform
+			// calculate value
+			float time = proportionSample * i + m_phase;
+			time -= floor(time);
+			float value = time < m_dutyCycle / 100.0f ? m_amplitude : -m_amplitude;
 
-		return;
+			for (int c = 0; c < mp_format->nChannels; ++c) {
+				p_floatBuffer[mp_format->nChannels * i + c] = value;
+			}
+		}
 
-	case 3: // sawtooth waveform
-
-		return;
+		break;
 	}
+	case 2: { // triangular waveform
+	
+		for (int i = 0; i < nSamples; ++i) {
+
+			// calculate value
+			float time = proportionSample * i + m_phase;
+			time -= floor(time);
+			float value;
+			if (time < 0.25f) {
+
+				value = time * m_amplitude / 0.25f;
+			}
+			else if (time < 0.75f) {
+
+				value = m_amplitude * (2 - time / 0.25f);
+			}
+			else {
+				
+				value = m_amplitude * (time / 0.25f - 4);
+			}
+
+			for (int c = 0; c < mp_format->nChannels; ++c) {
+				p_floatBuffer[mp_format->nChannels * i + c] = value;
+			}
+		}
+
+		break;
+	}
+	case 3: { // sawtooth waveform
+	
+		for (int i = 0; i < nSamples; ++i) {
+
+			// calculate value
+			float time = proportionSample * i + m_phase;
+			time -= floor(time);
+			float value = m_amplitude * (2 * time - 1);
+
+			for (int c = 0; c < mp_format->nChannels; ++c) {
+				p_floatBuffer[mp_format->nChannels * i + c] = value;
+			}
+		}
+
+		break;
+	}
+	}
+
+	// calculate new phase
+	m_phase += proportionSample * nSamples;
+	m_phase -= floor(m_phase);
+}
+
+void SignalGenerator::calculatePlotWaveform() {
+
+	switch (m_waveformType) {
+
+	case 0: { // sine waveform
+	
+		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
+
+			float time = i / ((float)SIGGEN_PLOT_SIZE);
+			mpa_plotData[i] = m_amplitude * sin(2 * std::numbers::pi * time);
+		}
+		break;
+	}
+	case 1: { // rectangular waveform
+
+		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
+
+			float time = i / ((float)SIGGEN_PLOT_SIZE);
+			mpa_plotData[i] = time < m_dutyCycle / 100.0f ? m_amplitude : -m_amplitude;
+		}
+		break;
+	}
+	case 2: { // triangular waveform
+
+		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
+
+			float time = i / ((float)SIGGEN_PLOT_SIZE);
+
+			if (time < 0.25f) {
+
+				mpa_plotData[i] = time * m_amplitude / 0.25f;
+			}
+			else if (time < 0.75f) {
+
+				mpa_plotData[i] = m_amplitude * (2 - time / 0.25f);
+			}
+			else {
+
+				mpa_plotData[i] = m_amplitude * (time / 0.25f - 4);
+			}
+		}
+		break;
+	}
+	case 3: { // sawtooth waveform
+
+		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
+
+			float time = i / ((float)SIGGEN_PLOT_SIZE);
+			mpa_plotData[i] = m_amplitude * (2 * time - 1);
+		}
+		break;
+	}
+	}
+
+	// emit signal to update plot
+	EMIT(onPlotUpdate);
 }

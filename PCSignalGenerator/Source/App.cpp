@@ -1,6 +1,8 @@
 #include "Gui.h"
 #include "App.h"
 
+#include "Style/Palette.h"
+
 #include <numbers>
 #include <string>
 #include <vector>
@@ -20,6 +22,9 @@ App::~App() {
 	delete mp_oscPlot;
 	delete mp_bodeMagnitude;
 	delete mp_bodePhase;
+
+	delete mp_sigGenPlotSeries;
+	delete mp_oscPlotSeries;
 
 	delete mp_mainLayout;
 	delete mp_parameterLayout;
@@ -55,10 +60,18 @@ void App::initUI() {
 	setMainWindow(mp_window);
 
 	// create signal generator plot
-	mp_sigGenPlot = new Plot(mp_window, L"Time", L"Voltage");
-	mp_sigGenPlot->setXUnit(Unit::Second);
+	mp_sigGenPlot = new Plot(mp_window, L"Phase", L"Voltage");
+	mp_sigGenPlot->setXUnit(Unit::Radians);
 	mp_sigGenPlot->setYUnit(Unit::Volts);
 	mp_sigGenPlot->setFillMode(FillMode::Expand);
+
+	// create plot series
+	mp_sigGenPlotSeries = new PlotSeries1D(mp_sigGenPlot, mp_sigGen->getPlotData(), 0,
+		2 * std::numbers::pi,mp_sigGen->getPlotDataSize(), Palette::Plot(2));
+
+	mp_sigGenPlot->addPlotSeries(mp_sigGenPlotSeries);
+
+	connect<SignalGenerator, PlotSeries1D>(mp_sigGenPlotSeries, &PlotSeries1D::onUpdate, mp_sigGen->onPlotUpdate);
 
 	// create oscilloscope plot
 	mp_oscPlot = new Plot(mp_window, L"Time", L"Voltage");

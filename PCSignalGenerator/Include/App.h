@@ -11,6 +11,7 @@
 #include "Widgets/Slider.h"
 #include "Widgets/Button.h"
 #include "Widgets/CheckBox.h"
+#include "Widgets/PlotSeries1D.h"
 
 #include "SignalGenerator.h"
 
@@ -25,6 +26,9 @@ private:
 	Plot* mp_oscPlot;
 	Plot* mp_bodeMagnitude;
 	Plot* mp_bodePhase;
+
+	PlotSeries1D* mp_sigGenPlotSeries;
+	PlotSeries1D* mp_oscPlotSeries;
 
 	LinearLayout* mp_mainLayout;
 	LinearLayout* mp_parameterLayout;

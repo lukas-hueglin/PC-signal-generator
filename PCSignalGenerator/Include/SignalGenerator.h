@@ -6,8 +6,8 @@
 #include "Common/Signal.h"
 
 
-#define REFTIMES_PER_SEC 10000000
-
+#define REFTIMES_PER_SEC 1000000
+#define SIGGEN_PLOT_SIZE 1024
 
 class SignalGenerator : public IFunctional {
 
@@ -19,6 +19,8 @@ private:
 	WAVEFORMATEX* mp_format;
 	unsigned int m_bufferSize;
 	float m_phase;
+
+	float mpa_plotData[SIGGEN_PLOT_SIZE];
 
 	bool m_output;
 	int m_waveformType;
@@ -37,16 +39,22 @@ public:
 	void setAmplitude(float amplitude);
 	void setDutyCycle(int dutyCycle);
 
+	float* getPlotData();
+	int getPlotDataSize();
 	bool getOutput();
 	int getWaveformType();
 	float getFrequency();
 	float getAmplitude();
 	int getDutyCycle();
 
+public:
+	Signal<> onPlotUpdate;
+
 private:
 	void onTick(float deltaTime);
 
 	void fillWaveformBuffer(byte* p_buffer, unsigned int nSamples);
+	void calculatePlotWaveform();
 
 	IMPLEMENT_LOADSAVE(SignalGenerator);
 };
