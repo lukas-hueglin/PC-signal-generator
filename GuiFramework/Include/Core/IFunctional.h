@@ -19,6 +19,8 @@ public:
 
 private:
 	virtual void onTick(float deltaTime) = 0;
+	virtual void onBegin() = 0;
+	virtual void onClose() = 0;
 
 	// make IApplication a friend
 	friend class IApplication;

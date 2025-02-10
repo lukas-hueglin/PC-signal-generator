@@ -57,7 +57,7 @@ void Plot::onPaint() {
 	std::wstring xSuffix = m_xAxisUnit == Unit::Radians ? L"\u03C0" : L"";
 	std::wstring ySuffix = m_yAxisUnit == Unit::Radians ? L"\u03C0" : L"";
 
-	// draw 10 lines
+	// draw 25 lines
 	for (int i = 0; i < 25; ++i) {
 
 		float x = x0 + xStep * i;
@@ -66,11 +66,11 @@ void Plot::onPaint() {
 		Math::Point2D screenSpace = plotToScreenSpace(Math::Point2D(x * prescaler_x, y * prescaler_y));
 
 		// check if line is in plot
-		if (x < m_plotBounds.right()) {
+		if (prescaler_x * x < m_plotBounds.right()) {
 
 			m_plotImpl.onPaintVerticalTicks(screenSpace.x(), floatToString(x) + xSuffix);
 		}
-		if (y < m_plotBounds.top()) {
+		if (prescaler_y * y < m_plotBounds.top()) {
 			m_plotImpl.onPaintHorizontalTicks(screenSpace.y(), floatToString(y) + ySuffix);
 		}
 	}

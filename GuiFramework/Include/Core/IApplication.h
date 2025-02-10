@@ -30,9 +30,6 @@ protected:
 	virtual void onBegin();
 	virtual void onClose();
 
-	virtual void loadFunctional() {};
-	virtual void saveFunctional() {};
-
 	virtual void initUI() = 0;
 
 	virtual std::wstring getApplicationName() = 0;

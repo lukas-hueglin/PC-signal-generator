@@ -17,9 +17,9 @@ void IApplication::onTick(float deltaTime) {
 void IApplication::onBegin() {
 	
 	// load all members of functional classes
-	loadFunctional();
 	for (IFunctional* p_functional : mp_functionals) {
 		p_functional->loadMembers(getIniPath());
+		p_functional->onBegin();
 	}
 
 	// init widgets
@@ -29,9 +29,9 @@ void IApplication::onBegin() {
 void IApplication::onClose() {
 
 	// save all members of functional classes
-	saveFunctional();
 	for (IFunctional* p_functional : mp_functionals) {
 		p_functional->saveMembers(getIniPath());
+		p_functional->onClose();
 	}
 }
 
