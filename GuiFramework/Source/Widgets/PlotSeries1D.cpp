@@ -6,7 +6,7 @@
 #include <vector>
 
 PlotSeries1D::PlotSeries1D(Plot* p_parent, float* pa_data, float lower, float upper, int size, Color color) :
-	PlotSeries(p_parent), mpa_data(pa_data), m_size(size), m_plotSeries1DImpl(mp_graphics, color) {
+	PlotSeries(p_parent), mpa_data(pa_data), m_size(size), m_plotSeries1DImpl(mp_graphics, color), m_head(0) {
 
 	// set bounds, that way a x data array is initialized
 	setBounds(lower, upper);
@@ -22,7 +22,10 @@ void PlotSeries1D::onUpdate() {
 
 	for (int i = 0; i < m_size; ++i) {
 
-		Math::Point2D point = mp_parent->plotToScreenSpace(Math::Point2D(m_lowerBound + step * i, mpa_data[i]));
+		// calculate index for rolling buffer
+		int index = (m_head + i) % m_size;
+
+		Math::Point2D point = mp_parent->plotToScreenSpace(Math::Point2D(m_lowerBound + step * i, mpa_data[index]));
 
 		points.push_back(point);
 	}
@@ -48,4 +51,9 @@ void PlotSeries1D::setBounds(float lower, float upper) {
 
 	m_lowerBound = lower;
 	m_upperBound = upper;
+}
+
+void PlotSeries1D::setHead(float head) {
+
+	m_head = head;
 }

@@ -15,6 +15,7 @@ private:
 	float m_upperBound;
 
 	int m_size;
+	int m_head;
 
 protected:
 	PlotSeries1DImpl m_plotSeries1DImpl;
@@ -30,4 +31,6 @@ public:
 	void setColor(Color color) override;
 
 	void setBounds(float lower, float upper);
+
+	void setHead(float head);
 };
