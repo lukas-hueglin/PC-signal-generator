@@ -107,7 +107,7 @@ void App::initUI() {
 	mp_waveformComboBox->setPadding(10.0f);
 
 	// connect ComboBox!!
-	//connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->)
+	connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->onValueChanged);
 
 
 	mp_frequencyLabel = new Label(mp_window, L"Frequency");
