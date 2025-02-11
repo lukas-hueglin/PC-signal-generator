@@ -10,6 +10,9 @@ PlotSeries1D::PlotSeries1D(Plot* p_parent, float* pa_data, float lower, float up
 
 	// set bounds, that way a x data array is initialized
 	setBounds(lower, upper);
+
+	// update first time
+	onUpdate();
 }
 
 void PlotSeries1D::onUpdate() {
@@ -35,9 +38,6 @@ void PlotSeries1D::onUpdate() {
 }
 
 void PlotSeries1D::onPaint(Math::Rect& available) {
-
-	// update plot
-	onUpdate(); // this is wrong!! has to be changed
 
 	m_plotSeries1DImpl.onPaint(available, m_fillArea);
 }

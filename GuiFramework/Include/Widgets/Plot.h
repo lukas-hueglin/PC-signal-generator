@@ -61,6 +61,7 @@ public:
 
 	void onPaint() override;
 	void onResize(Math::Rect availableRect) override;
+	void onUpdate();
 
 	void onMouseHover(Math::Point2D point) override;
 	void onMouseScroll(bool up, bool shift, bool ctr) override;

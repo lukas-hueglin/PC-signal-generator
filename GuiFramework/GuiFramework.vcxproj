@@ -87,6 +87,9 @@
     <PostBuildEvent>
       <Command>copy $(OutDir)\GuiFramework.dll  $(SolutionDir)\Build\PCSignalGenerator\$(Configuration)</Command>
     </PostBuildEvent>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugUI|x64'">
     <ClCompile>
@@ -197,6 +200,7 @@
     <ClInclude Include="Include\Widgets\PlotSeries.h" />
     <ClInclude Include="Include\Widgets\PlotSeries1D.h" />
     <ClInclude Include="Include\Widgets\Slider.h" />
+    <ClInclude Include="Include\Widgets\StateButton.h" />
     <ClInclude Include="Include\Widgets\TextBox.h" />
     <ClInclude Include="Include\Widgets\Widget.h" />
   </ItemGroup>
@@ -248,6 +252,7 @@
     <ClCompile Include="Source\Widgets\PlotSeries.cpp" />
     <ClCompile Include="Source\Widgets\PlotSeries1D.cpp" />
     <ClCompile Include="Source\Widgets\Slider.cpp" />
+    <ClCompile Include="Source\Widgets\StateButton.cpp" />
     <ClCompile Include="Source\Widgets\TextBox.cpp" />
     <ClCompile Include="Source\Widgets\Widget.cpp" />
   </ItemGroup>

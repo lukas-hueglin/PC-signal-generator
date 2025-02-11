@@ -83,48 +83,58 @@ LRESULT Win32Window::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
         switch (uMsg) {
 
         case WM_CREATE:
-
+        {
             p_this->onBegin();
             return 1;
-
+        }
         case WM_DESTROY:
-
+        {
             p_this->onDestroy();
             PostQuitMessage(0); // if any window is closed, the program will exit
             return 1;
-
+        }
         case WM_PAINT:
-
+        {
             p_this->onPaint();
             return 1;
-
+        }
         case WM_SIZE:
-
+        {
             RECT rc;
             GetClientRect(p_this->m_hWnd, &rc);
-            p_this->onResize(Math::Rect(rc));
-            return 1;
+            float dpiScale = GetDpiForWindow(p_this->m_hWnd) / ((float)USER_DEFAULT_SCREEN_DPI);
 
+            p_this->onResize(Math::Rect(0, rc.right / dpiScale, 0, rc.bottom / dpiScale));
+            return 1;
+        }
         case WM_MOUSEMOVE:
+        {
+            float dpiScale = GetDpiForWindow(p_this->m_hWnd) / ((float)USER_DEFAULT_SCREEN_DPI);
 
-            p_this->onMouseMove(Math::Point2D(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
+            p_this->onMouseMove(Math::Point2D(GET_X_LPARAM(lParam) / dpiScale, GET_Y_LPARAM(lParam) / dpiScale));
             return 1;
-
+        }
         case WM_LBUTTONDBLCLK:
+        {
+            float dpiScale = GetDpiForWindow(p_this->m_hWnd) / ((float)USER_DEFAULT_SCREEN_DPI);
 
-            p_this->onMouseDown(true, Math::Point2D(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
+            p_this->onMouseDown(true, Math::Point2D(GET_X_LPARAM(lParam) / dpiScale, GET_Y_LPARAM(lParam) / dpiScale));
             return 1;
-
+        }
         case WM_LBUTTONDOWN:
+        {
+            float dpiScale = GetDpiForWindow(p_this->m_hWnd) / ((float)USER_DEFAULT_SCREEN_DPI);
 
-            p_this->onMouseDown(false, Math::Point2D(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
+            p_this->onMouseDown(false, Math::Point2D(GET_X_LPARAM(lParam) / dpiScale, GET_Y_LPARAM(lParam) / dpiScale));
             return 1;
-
+        }
         case WM_LBUTTONUP:
+        {
+            float dpiScale = GetDpiForWindow(p_this->m_hWnd) / ((float) USER_DEFAULT_SCREEN_DPI);
 
-            p_this->onMouseRelease(Math::Point2D(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
+            p_this->onMouseRelease(Math::Point2D(GET_X_LPARAM(lParam) / dpiScale, GET_Y_LPARAM(lParam) / dpiScale));
             return 1;
-
+        }
         case WM_KEYDOWN:
         {
             Key key = Win32Utils::convertWin32Keys(wParam);
@@ -134,13 +144,13 @@ LRESULT Win32Window::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             return 1;
         }
         case WM_CHAR:
-
+        {
             // if characters are printable
             if (wParam >= 0x20 && wParam <= 0x7E) {
-                p_this->onKeyDown((char) wParam);
+                p_this->onKeyDown((char)wParam);
             }
             return 1;
-
+        }
         case WM_MOUSEWHEEL:
         {
             // extract data

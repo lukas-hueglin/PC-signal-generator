@@ -60,9 +60,6 @@ void Win32Graphics2D::initGraphicsAssets() {
         );
 
         // TODO: check hresult
-
-        // enable DPI awareness
-        //SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
     }
 }
 
@@ -96,5 +93,16 @@ void Win32Graphics2D::resizeCanvas() {
 
         mp_renderTarget->Resize(size);
         InvalidateRect(this->m_hWnd, NULL, FALSE);
+    }
+}
+
+Math::Rect Win32Graphics2D::getDPISize() {
+
+    if (mp_renderTarget != nullptr) {
+        D2D1_SIZE_F size = mp_renderTarget->GetSize();
+        return Math::Rect(0, size.width, 0, size.height);
+    }
+    else {
+        return Math::Rect();
     }
 }

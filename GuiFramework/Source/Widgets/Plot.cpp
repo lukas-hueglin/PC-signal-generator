@@ -92,6 +92,13 @@ void Plot::onResize(Math::Rect availableRect) {
 	m_plotImpl.onResize(m_plotRect, Math::Rect());
 }
 
+void Plot::onUpdate() {
+
+	for (PlotSeries* p_series : mp_series) {
+		p_series->onUpdate();
+	}
+}
+
 void Plot::onMouseHover(Math::Point2D point) {
 
 	// call parent function

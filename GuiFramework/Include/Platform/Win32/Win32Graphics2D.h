@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/IGraphics2D.h"
+#include "Common/MathUtils.h"
 
 class GUI_API Win32Graphics2D : public IGraphics2D {
 
@@ -26,6 +27,8 @@ public:
 	void discardGraphicsAssets();
 
 	void resizeCanvas();
+	
+	Math::Rect getDPISize();
 
 private:
 	void initGraphicsAssets();
