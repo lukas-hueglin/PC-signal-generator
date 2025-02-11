@@ -32,5 +32,5 @@ public:
 
 	void setBounds(float lower, float upper);
 
-	void setHead(float head);
+	void setHead(int head);
 };

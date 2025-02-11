@@ -114,8 +114,8 @@ void Plot::onMouseScroll(bool up, bool shift, bool ctr) {
 	// create variables
 	float left, right, top, bottom;
 
-	// dont scale y if shift is pressed
-	if (shift) {
+	// dont scale y if shift is pressed or locked
+	if ((shift && !m_lockXZoom) || m_lockYZoom) {
 		top = m_plotBounds.top();
 		bottom = m_plotBounds.bottom();
 	}
@@ -124,13 +124,21 @@ void Plot::onMouseScroll(bool up, bool shift, bool ctr) {
 		bottom = (m_plotBounds.bottom() - m_plotBounds.getCenter().y()) * zoom + m_plotBounds.getCenter().y();
 	}
 
-	// calculate horizontal component
-	left = (m_plotBounds.left() - m_plotBounds.getCenter().x()) * zoom + m_plotBounds.getCenter().x();
-	right = (m_plotBounds.right() - m_plotBounds.getCenter().x()) * zoom + m_plotBounds.getCenter().x();
-
+	// dont scale x if locked
+	if (m_lockXZoom) {
+		left = m_plotBounds.left();
+		right = m_plotBounds.right();
+	}
+	else {
+		left = (m_plotBounds.left() - m_plotBounds.getCenter().x()) * zoom + m_plotBounds.getCenter().x();
+		right = (m_plotBounds.right() - m_plotBounds.getCenter().x()) * zoom + m_plotBounds.getCenter().x();
+	}
 	m_plotBounds = Math::Rect(left, right, top, bottom);
 
 	requestRedraw();
+
+	// emit signal onZoom
+	EMIT(onZoom, m_plotBounds.getSize());
 }
 
 void Plot::setLockXZoom(bool lock) {
@@ -161,6 +169,28 @@ void Plot::setXUnit(Unit unit) {
 void Plot::setYUnit(Unit unit) {
 
 	m_yAxisUnit = unit;
+}
+
+void Plot::setPlotBounds(Math::Rect bounds) {
+
+	m_plotBounds = bounds;
+}
+
+void Plot::setPlotXBounds(float left, float right) {
+
+	m_plotBounds.left() = left;
+	m_plotBounds.right() = right;
+}
+
+void Plot::setPlotYBounds(float top, float bottom) {
+
+	m_plotBounds.top() = top;
+	m_plotBounds.bottom() = bottom;
+}
+
+Math::Rect Plot::getPlotBounds() {
+
+	return m_plotBounds;
 }
 
 void Plot::addPlotSeries(PlotSeries* p_plotSeries) {

@@ -53,7 +53,7 @@ void PlotSeries1D::setBounds(float lower, float upper) {
 	m_upperBound = upper;
 }
 
-void PlotSeries1D::setHead(float head) {
+void PlotSeries1D::setHead(int head) {
 
 	m_head = head;
 }

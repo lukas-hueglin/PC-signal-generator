@@ -1,6 +1,7 @@
 #pragma once
 #include "Widgets/Widget.h"
 #include "Widgets/PlotSeries.h"
+#include "Common/Signal.h"
 
 #include <vector>
 
@@ -73,12 +74,20 @@ public:
 	void setXUnit(Unit unit);
 	void setYUnit(Unit unit);
 
+	void setPlotBounds(Math::Rect bounds);
+	void setPlotXBounds(float left, float right);
+	void setPlotYBounds(float top, float bottom);
+
+	Math::Rect getPlotBounds();
+
 	void addPlotSeries(PlotSeries* p_plotSeries);
 
 	Math::Point2D plotToScreenSpace(Math::Point2D point);
 
 	Math::Point2D screenToPlotSpace(Math::Point2D point);
 	Math::Point2D relativeScreenToPlotSpace(Math::Point2D point);
+
+	Signal<Math::Size> onZoom;
 
 private:
 	float calculateTickStep(float width, int prefDivs, int base, float prefactor);
