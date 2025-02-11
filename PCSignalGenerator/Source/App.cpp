@@ -7,14 +7,16 @@
 #include <string>
 #include <vector>
 
-App::App(int argc, char** argv) : Application(argc, argv), mp_sigGen(new SignalGenerator()) {
+App::App(int argc, char** argv) : Application(argc, argv), mp_sigGen(new SignalGenerator()), mp_osc(new Oscilloscope) {
 
 	REGISTER_FUNCTIONAL(mp_sigGen)
+	REGISTER_FUNCTIONAL(mp_osc)
 }
 
 App::~App() {
 
 	delete mp_sigGen;
+	delete mp_osc;
 
 	delete mp_window;
 
@@ -38,7 +40,7 @@ App::~App() {
 	delete mp_oscLayout;
 	delete mp_freqResponseLayout;
 
-	delete mp_enableCheckBox;
+	delete mp_enableSigGenCheckBox;
 
 	delete mp_waveformLabel;
 	delete mp_waveformComboBox;
@@ -51,6 +53,14 @@ App::~App() {
 
 	delete mp_dutyCycleLabel;
 	delete mp_dutyCycleSlider;
+
+	delete mp_enableOscCheckBox;
+
+	delete mp_aquisitionModeLabel;
+	delete mp_aquisitionModeComboBox;
+
+	delete mp_triggerLevelLabel;
+	delete mp_triggerLevelSlider;
 }
 
 void App::initUI() {
@@ -79,6 +89,16 @@ void App::initUI() {
 	mp_oscPlot->setYUnit(Unit::Volts);
 	mp_oscPlot->setFillMode(FillMode::Expand);
 
+	connect<Plot, Oscilloscope, Math::Size>(mp_osc, &Oscilloscope::calculateSampleRate, mp_oscPlot->onZoom);
+
+	// create plot series
+	mp_oscPlotSeries = new PlotSeries1D(mp_oscPlot, mp_osc->getPlotData(), -1, 1, mp_osc->getPlotDataSize(), Palette::Plot(0));
+	mp_oscPlot->addPlotSeries(mp_oscPlotSeries);
+
+	connect<Oscilloscope, PlotSeries1D>(mp_oscPlotSeries, &PlotSeries1D::onUpdate, mp_osc->onPlotUpdate);
+	connect<Oscilloscope, PlotSeries1D, int>(mp_oscPlotSeries, &PlotSeries1D::setHead, mp_osc->onTrigger);
+	connect<Oscilloscope, PlotSeries1D, float, float>(mp_oscPlotSeries, &PlotSeries1D::setBounds, mp_osc->onBoundsChange);
+
 	// create plots for bode plot
 	mp_bodeMagnitude = new Plot(mp_window, L"Frequency", L"Voltage");
 	mp_bodeMagnitude->setXUnit(Unit::Hertz);
@@ -92,10 +112,10 @@ void App::initUI() {
 
 	// create parameters
 
-	mp_enableCheckBox = new CheckBox(mp_window, L"Enable Output", mp_sigGen->getOutput());
-	mp_enableCheckBox->setMargin(10.0f);
-	mp_enableCheckBox->setPadding(10.0f);
-	connect<CheckBox, SignalGenerator, bool>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableCheckBox->onStateChanged);
+	mp_enableSigGenCheckBox = new CheckBox(mp_window, L"Enable Output", mp_sigGen->isOutputEnabled());
+	mp_enableSigGenCheckBox->setMargin(10.0f);
+	mp_enableSigGenCheckBox->setPadding(10.0f);
+	connect<CheckBox, SignalGenerator, bool>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableSigGenCheckBox->onStateChanged);
 
 
 	mp_waveformLabel = new Label(mp_window, L"Waveform");
@@ -105,8 +125,6 @@ void App::initUI() {
 	mp_waveformComboBox = new ComboBox(mp_window, std::vector<std::wstring>({ L"Sine", L"Rectangular", L"Triangle", L"Sawtooth" }));
 	mp_waveformComboBox->setMargin(10.0f);
 	mp_waveformComboBox->setPadding(10.0f);
-
-	// connect ComboBox!!
 	connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->onValueChanged);
 
 
@@ -143,12 +161,38 @@ void App::initUI() {
 	connect<Slider<int>, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setDutyCycle, mp_dutyCycleSlider->onValueChanged);
 
 
+	mp_enableOscCheckBox = new CheckBox(mp_window, L"Enable Oscilloscope", mp_osc->isOscEnabled());
+	mp_enableSigGenCheckBox->setMargin(10.0f);
+	mp_enableSigGenCheckBox->setPadding(10.0f);
+	connect<CheckBox, Oscilloscope, bool>(mp_osc, &Oscilloscope::enableOscilloscope, mp_enableOscCheckBox->onStateChanged);
+
+
+	mp_aquisitionModeLabel = new Label(mp_window, L"Aquisition Mode");
+	mp_aquisitionModeLabel->setMargin(10.0f);
+	mp_aquisitionModeLabel->setPadding(10.0f);
+
+	mp_aquisitionModeComboBox = new ComboBox(mp_window, std::vector<std::wstring>({ L"Trigger", L"Rolling" }));
+	mp_aquisitionModeComboBox->setMargin(10.0f);
+	mp_aquisitionModeComboBox->setPadding(10.0f);
+	connect<ComboBox, Oscilloscope, int>(mp_osc, &Oscilloscope::setAquisitionMode, mp_aquisitionModeComboBox->onValueChanged);
+
+
+	mp_triggerLevelLabel = new Label(mp_window, L"Trigger Level");
+	mp_triggerLevelLabel->setMargin(10.0f);
+	mp_triggerLevelLabel->setPadding(10.0f);
+
+	mp_triggerLevelSlider = new Slider<float>(mp_window, mp_osc->getTriggerLevel(), -5, 5);
+	mp_triggerLevelSlider->setMargin(10.0f);
+	mp_triggerLevelSlider->setPadding(10.0f);
+	mp_triggerLevelSlider->setSuffix(L" V");
+	connect<Slider<float>, Oscilloscope, float>(mp_osc, &Oscilloscope::setTriggerLevel, mp_triggerLevelSlider->onValueChanged);
+
 	// create parameter GridLayouts
 	mp_sigGenLayout = new GridLayout(mp_window, 5, 2);
-	mp_oscLayout = new GridLayout(mp_window, 4, 2);
+	mp_oscLayout = new GridLayout(mp_window, 3, 2);
 	mp_freqResponseLayout = new GridLayout(mp_window, 4, 2);
 
-	mp_sigGenLayout->addFrame(mp_enableCheckBox, 0, 0);
+	mp_sigGenLayout->addFrame(mp_enableSigGenCheckBox, 0, 0);
 	mp_sigGenLayout->addFrame(mp_waveformLabel, 1, 0);
 	mp_sigGenLayout->addFrame(mp_waveformComboBox, 1, 1);
 	mp_sigGenLayout->addFrame(mp_frequencyLabel, 2, 0);
@@ -157,6 +201,12 @@ void App::initUI() {
 	mp_sigGenLayout->addFrame(mp_amplitudeSlider, 3, 1);
 	mp_sigGenLayout->addFrame(mp_dutyCycleLabel, 4, 0);
 	mp_sigGenLayout->addFrame(mp_dutyCycleSlider, 4, 1);
+
+	mp_oscLayout->addFrame(mp_enableOscCheckBox, 0, 0);
+	mp_oscLayout->addFrame(mp_aquisitionModeLabel, 1, 0);
+	mp_oscLayout->addFrame(mp_aquisitionModeComboBox, 1, 1);
+	mp_oscLayout->addFrame(mp_triggerLevelLabel, 2, 0);
+	mp_oscLayout->addFrame(mp_triggerLevelSlider, 2, 1);
 
 	// create GroupBoxes
 	mp_sigGenGroup = new GroupBox(mp_window, mp_sigGenLayout, L"Signal Generator");

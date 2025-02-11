@@ -27,12 +27,18 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Oscilloscope.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\App.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
     <ClInclude Include="Include\SignalGenerator.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Oscilloscope.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>

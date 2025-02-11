@@ -14,11 +14,13 @@
 #include "Widgets/PlotSeries1D.h"
 
 #include "SignalGenerator.h"
+#include "Oscilloscope.h"
 
 class App : public Application {
 
 private:
 	SignalGenerator* mp_sigGen;
+	Oscilloscope* mp_osc;
 
 	MainWindow* mp_window;
 
@@ -42,7 +44,7 @@ private:
 	GridLayout* mp_oscLayout;
 	GridLayout* mp_freqResponseLayout;
 
-	CheckBox* mp_enableCheckBox;
+	CheckBox* mp_enableSigGenCheckBox;
 
 	Label* mp_waveformLabel;
 	ComboBox* mp_waveformComboBox;
@@ -55,6 +57,14 @@ private:
 
 	Label* mp_dutyCycleLabel;
 	Slider<int>* mp_dutyCycleSlider;
+
+	CheckBox* mp_enableOscCheckBox;
+
+	Label* mp_aquisitionModeLabel;
+	ComboBox* mp_aquisitionModeComboBox;
+
+	Label* mp_triggerLevelLabel;
+	Slider<float>* mp_triggerLevelSlider;
 
 public:
 	App(int argc, char** argv);

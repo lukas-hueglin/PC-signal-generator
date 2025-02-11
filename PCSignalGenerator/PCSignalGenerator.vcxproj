@@ -127,11 +127,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\Oscilloscope.cpp" />
     <ClCompile Include="Source\SignalGenerator.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\App.h" />
+    <ClInclude Include="Include\Oscilloscope.h" />
     <ClInclude Include="Include\SignalGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

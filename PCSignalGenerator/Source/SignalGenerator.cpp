@@ -5,6 +5,8 @@
 #include <numbers>
 #include <assert.h>
 
+#define REFTIMES_PER_SEC 1000000
+
 const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
 const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
 const IID IID_IAudioClient = __uuidof(IAudioClient);
@@ -130,7 +132,7 @@ void SignalGenerator::setDutyCycle(int dutyCycle) {
 
 float* SignalGenerator::getPlotData() {
 
-	return mpa_plotData;
+	return ma_plotData;
 }
 
 int SignalGenerator::getPlotDataSize() {
@@ -138,7 +140,7 @@ int SignalGenerator::getPlotDataSize() {
 	return SIGGEN_PLOT_SIZE;
 }
 
-bool SignalGenerator::getOutput() {
+bool SignalGenerator::isOutputEnabled() {
 
 	return m_output;
 }
@@ -166,32 +168,35 @@ int SignalGenerator::getDutyCycle() {
 
 void SignalGenerator::onTick(float deltaTime) {
 
-	// create hresult
-	HRESULT hr;
+	if (m_output) {
 
-	unsigned int padding;
-	unsigned int availableFrames;
+		// create hresult
+		HRESULT hr;
 
-	// get padding size
-	hr = mp_audioClient->GetCurrentPadding(&padding);
-	assert(SUCCEEDED(hr));
+		unsigned int padding;
+		unsigned int availableFrames;
+
+		// get padding size
+		hr = mp_audioClient->GetCurrentPadding(&padding);
+		assert(SUCCEEDED(hr));
 	
-	// calculate available space
-	availableFrames = m_bufferSize - padding;
+		// calculate available space
+		availableFrames = m_bufferSize - padding;
 
-	// create buffer
-	BYTE* p_buffer;
+		// create buffer
+		BYTE* p_buffer;
 
-	// get all available buffer space
-	hr = mp_audioRenderClient->GetBuffer(availableFrames, &p_buffer);
-	assert(SUCCEEDED(hr));
+		// get all available buffer space
+		hr = mp_audioRenderClient->GetBuffer(availableFrames, &p_buffer);
+		assert(SUCCEEDED(hr));
 
-	// fill buffer
-	fillWaveformBuffer(p_buffer, availableFrames);
+		// fill buffer
+		fillWaveformBuffer(p_buffer, availableFrames);
 
-	// write buffer
-	hr = mp_audioRenderClient->ReleaseBuffer(availableFrames, 0);
-	assert(SUCCEEDED(hr));
+		// write buffer
+		hr = mp_audioRenderClient->ReleaseBuffer(availableFrames, 0);
+		assert(SUCCEEDED(hr));
+	}
 }
 
 void SignalGenerator::onBegin() {
@@ -302,7 +307,7 @@ void SignalGenerator::calculatePlotWaveform() {
 		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
 
 			float time = i / ((float)SIGGEN_PLOT_SIZE);
-			mpa_plotData[i] = m_amplitude * sin(2 * std::numbers::pi * time);
+			ma_plotData[i] = m_amplitude * sin(2 * std::numbers::pi * time);
 		}
 		break;
 	}
@@ -311,7 +316,7 @@ void SignalGenerator::calculatePlotWaveform() {
 		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
 
 			float time = i / ((float)SIGGEN_PLOT_SIZE);
-			mpa_plotData[i] = time < m_dutyCycle / 100.0f ? m_amplitude : -m_amplitude;
+			ma_plotData[i] = time < m_dutyCycle / 100.0f ? m_amplitude : -m_amplitude;
 		}
 		break;
 	}
@@ -323,15 +328,15 @@ void SignalGenerator::calculatePlotWaveform() {
 
 			if (time < 0.25f) {
 
-				mpa_plotData[i] = time * m_amplitude / 0.25f;
+				ma_plotData[i] = time * m_amplitude / 0.25f;
 			}
 			else if (time < 0.75f) {
 
-				mpa_plotData[i] = m_amplitude * (2 - time / 0.25f);
+				ma_plotData[i] = m_amplitude * (2 - time / 0.25f);
 			}
 			else {
 
-				mpa_plotData[i] = m_amplitude * (time / 0.25f - 4);
+				ma_plotData[i] = m_amplitude * (time / 0.25f - 4);
 			}
 		}
 		break;
@@ -341,7 +346,7 @@ void SignalGenerator::calculatePlotWaveform() {
 		for (int i = 0; i < SIGGEN_PLOT_SIZE; ++i) {
 
 			float time = i / ((float)SIGGEN_PLOT_SIZE);
-			mpa_plotData[i] = m_amplitude * (2 * time - 1);
+			ma_plotData[i] = m_amplitude * (2 * time - 1);
 		}
 		break;
 	}
