@@ -10,6 +10,7 @@
 #include "Widgets/ComboBox.h"
 #include "Widgets/Slider.h"
 #include "Widgets/Button.h"
+#include "Widgets/StateButton.h"
 #include "Widgets/CheckBox.h"
 #include "Widgets/PlotSeries1D.h"
 
@@ -26,15 +27,15 @@ private:
 
 	Plot* mp_sigGenPlot;
 	Plot* mp_oscPlot;
-	Plot* mp_bodeMagnitude;
-	Plot* mp_bodePhase;
+	Plot* mp_bode;
 
 	PlotSeries1D* mp_sigGenPlotSeries;
 	PlotSeries1D* mp_oscPlotSeries;
 
 	LinearLayout* mp_mainLayout;
 	LinearLayout* mp_parameterLayout;
-	GridLayout* mp_plotLayout;
+	LinearLayout* mp_vertPlotLayout;
+	LinearLayout* mp_horPlotLayout;
 
 	GroupBox* mp_sigGenGroup;
 	GroupBox* mp_oscGroup;
@@ -44,7 +45,8 @@ private:
 	GridLayout* mp_oscLayout;
 	GridLayout* mp_freqResponseLayout;
 
-	CheckBox* mp_enableSigGenCheckBox;
+	Label* mp_enableSigGenLabel;
+	StateButton* mp_enableSigGenButton;
 
 	Label* mp_waveformLabel;
 	ComboBox* mp_waveformComboBox;
@@ -58,7 +60,8 @@ private:
 	Label* mp_dutyCycleLabel;
 	Slider<int>* mp_dutyCycleSlider;
 
-	CheckBox* mp_enableOscCheckBox;
+	Label* mp_enableOscLabel;
+	StateButton* mp_enableOscButton;
 
 	Label* mp_aquisitionModeLabel;
 	ComboBox* mp_aquisitionModeComboBox;

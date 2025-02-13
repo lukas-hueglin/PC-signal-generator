@@ -22,6 +22,8 @@ private:
 	int m_head;
 	float m_lastValue; // stores the last value
 
+	std::vector<int> m_triggerLoc; // stores all triggering events until they are actually emitted
+
 	float m_sampleRate;
 	int m_nSamplesSkiped;
 
@@ -43,7 +45,7 @@ public:
 	
 	void setAquisitionMode(int mode);
 	void setTriggerLevel(float level);
-	void enableOscilloscope(bool enable);
+	void enableOscilloscope(int enable);
 
 	void calculateSampleRate(Math::Size plotBounds);
 
@@ -55,6 +57,9 @@ private:
 	void onTick(float deltaTime) override;
 	void onBegin() override;
 	void onClose() override;
+
+	void handleAquisitionMode(float value);
+	void handleTriggerTiming();
 
 
 	IMPLEMENT_LOADSAVE(Oscilloscope);

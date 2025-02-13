@@ -91,7 +91,7 @@ SignalGenerator::~SignalGenerator() {
 	CoUninitialize();
 }
 
-void SignalGenerator::enableOutput(bool output) {
+void SignalGenerator::enableOutput(int output) {
 
 	m_output = output;
 

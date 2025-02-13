@@ -32,7 +32,7 @@ public:
 	~SignalGenerator();
 
 public:
-	void enableOutput(bool output);
+	void enableOutput(int output);
 	void setWaveformType(int waveformType);
 	void setFrequency(float frequency);
 	void setAmplitude(float amplitude);

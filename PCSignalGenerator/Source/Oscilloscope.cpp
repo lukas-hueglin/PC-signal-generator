@@ -87,7 +87,7 @@ int Oscilloscope::getPlotDataSize() {
 	return OSC_DATA_BUFFER_SIZE;
 }
 
-void Oscilloscope::enableOscilloscope(bool enable) {
+void Oscilloscope::enableOscilloscope(int enable) {
 
 	m_enable = enable;
 
@@ -172,28 +172,13 @@ void Oscilloscope::onTick(float deltaTime) {
 			float value = p_floatBuffer[mp_format->nChannels * i];
 			ma_data[m_head] = value;
 
-			// check aquisition mode
-			switch (m_aquisitionMode) {
+			// check if trigger can be emitted (the program waits half the buffer to
+			// fill up with new data and only then emits the trigger signal)
+			handleTriggerTiming();
 
-			case 0: { // trigger
-
-				// check if signal changed sign
-				if (m_lastValue < m_triggerLevel && value > m_triggerLevel) {
-
-					// calculate new head for plot data, so that the triggerd sample is in the center
-					int head = (m_head + OSC_DATA_BUFFER_SIZE / 2) % OSC_DATA_BUFFER_SIZE;
-
-					// trigger
-					EMIT(onTrigger, head);
-				}
-				break;
-			}
-			case 1: { // rolling
-
-				EMIT(onTrigger, m_head);
-				break;
-			}}
-
+			// check aquisition mode and calculate new head position for plot
+			handleAquisitionMode(value);
+			
 			// increase and possibly wrap head
 			if (++m_head == OSC_DATA_BUFFER_SIZE) {
 				m_head = 0;
@@ -206,14 +191,55 @@ void Oscilloscope::onTick(float deltaTime) {
 		// release buffer
 		hr = mp_audioCaptureClient->ReleaseBuffer(availableFrames);
 		assert(SUCCEEDED(hr));
-
-		// emit signal onPlotUpdate
-		EMIT(onPlotUpdate);
 	}
 }
 
-void Oscilloscope::onBegin() {
+void Oscilloscope::onBegin() { }
+
+void Oscilloscope::onClose() { }
+
+void Oscilloscope::handleAquisitionMode(float value) {
+
+	switch (m_aquisitionMode) {
+
+	case 0: { // trigger
+
+		// check if signal changed sign
+		if (m_lastValue < m_triggerLevel && value > m_triggerLevel) {
+
+			// calculate new head for plot data, so that the triggerd sample is in the center
+			int head = (m_head + OSC_DATA_BUFFER_SIZE / 2) % OSC_DATA_BUFFER_SIZE;
+
+			// add to vectors
+			m_triggerLoc.push_back(head);
+		}
+		break;
+	}
+	case 1: { // rolling
+
+		EMIT(onTrigger, m_head);
+		EMIT(onPlotUpdate);
+
+		break;
+	}
+	}
 }
 
-void Oscilloscope::onClose() {
+void Oscilloscope::handleTriggerTiming() {
+
+	// check only first trigger event
+	if (m_triggerLoc.size() > 0) {
+
+		// calculate estimaded head
+		int estimHead = (m_triggerLoc.front() + OSC_DATA_BUFFER_SIZE / 2) % OSC_DATA_BUFFER_SIZE;
+		if (estimHead == m_head) {
+
+			// emit signal
+			EMIT(onTrigger, m_triggerLoc.front());
+			EMIT(onPlotUpdate);
+
+			// remove trigger event
+			m_triggerLoc.erase(m_triggerLoc.begin());
+		}
+	}
 }

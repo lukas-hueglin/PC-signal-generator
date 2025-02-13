@@ -22,15 +22,16 @@ App::~App() {
 
 	delete mp_sigGenPlot;
 	delete mp_oscPlot;
-	delete mp_bodeMagnitude;
-	delete mp_bodePhase;
+	delete mp_bode;
 
 	delete mp_sigGenPlotSeries;
 	delete mp_oscPlotSeries;
 
 	delete mp_mainLayout;
 	delete mp_parameterLayout;
-	delete mp_plotLayout;
+	delete mp_vertPlotLayout;
+	delete mp_horPlotLayout;
+
 
 	delete mp_sigGenGroup;
 	delete mp_oscGroup;
@@ -40,7 +41,8 @@ App::~App() {
 	delete mp_oscLayout;
 	delete mp_freqResponseLayout;
 
-	delete mp_enableSigGenCheckBox;
+	delete mp_enableSigGenLabel;
+	delete mp_enableSigGenButton;
 
 	delete mp_waveformLabel;
 	delete mp_waveformComboBox;
@@ -54,7 +56,8 @@ App::~App() {
 	delete mp_dutyCycleLabel;
 	delete mp_dutyCycleSlider;
 
-	delete mp_enableOscCheckBox;
+	delete mp_enableOscLabel;
+	delete mp_enableOscButton;
 
 	delete mp_aquisitionModeLabel;
 	delete mp_aquisitionModeComboBox;
@@ -73,7 +76,10 @@ void App::initUI() {
 	mp_sigGenPlot = new Plot(mp_window, L"Phase", L"Voltage");
 	mp_sigGenPlot->setXUnit(Unit::Radians);
 	mp_sigGenPlot->setYUnit(Unit::Volts);
+	mp_sigGenPlot->setLockXZoom(true);
 	mp_sigGenPlot->setFillMode(FillMode::Expand);
+	mp_sigGenPlot->setPlotXBounds(0, 2 * std::numbers::pi);
+	//mp_sigGenPlot->setPlotYBounds(-7, 7);
 
 	// create plot series
 	mp_sigGenPlotSeries = new PlotSeries1D(mp_sigGenPlot, mp_sigGen->getPlotData(), 0,
@@ -99,23 +105,21 @@ void App::initUI() {
 	connect<Oscilloscope, PlotSeries1D, int>(mp_oscPlotSeries, &PlotSeries1D::setHead, mp_osc->onTrigger);
 	connect<Oscilloscope, PlotSeries1D, float, float>(mp_oscPlotSeries, &PlotSeries1D::setBounds, mp_osc->onBoundsChange);
 
-	// create plots for bode plot
-	mp_bodeMagnitude = new Plot(mp_window, L"Frequency", L"Voltage");
-	mp_bodeMagnitude->setXUnit(Unit::Hertz);
-	mp_bodeMagnitude->setYUnit(Unit::Volts);
-	mp_bodeMagnitude->setFillMode(FillMode::Expand);
-
-	mp_bodePhase = new Plot(mp_window, L"Frequency", L"Phase");
-	mp_bodePhase->setXUnit(Unit::Hertz);
-	mp_bodePhase->setYUnit(Unit::Volts);
-	mp_bodePhase->setFillMode(FillMode::Expand);
+	// create bode plot
+	mp_bode = new Plot(mp_window, L"Frequency", L"Voltage");
+	mp_bode->setXUnit(Unit::Hertz);
+	mp_bode->setYUnit(Unit::Volts);
+	mp_bode->setFillMode(FillMode::Expand);
 
 	// create parameters
+	mp_enableSigGenLabel = new Label(mp_window, L"Signal Generator");
+	mp_enableSigGenLabel->setMargin(10.0f);
+	mp_enableSigGenLabel->setPadding(10.0f);
 
-	mp_enableSigGenCheckBox = new CheckBox(mp_window, L"Enable Output", mp_sigGen->isOutputEnabled());
-	mp_enableSigGenCheckBox->setMargin(10.0f);
-	mp_enableSigGenCheckBox->setPadding(10.0f);
-	connect<CheckBox, SignalGenerator, bool>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableSigGenCheckBox->onStateChanged);
+	mp_enableSigGenButton = new StateButton(mp_window, std::vector<std::wstring>({ L"Off", L"On"}));
+	mp_enableSigGenButton->setMargin(10.0f);
+	mp_enableSigGenButton->setPadding(10.0f);
+	connect<StateButton, SignalGenerator, int>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableSigGenButton->onStateChanged);
 
 
 	mp_waveformLabel = new Label(mp_window, L"Waveform");
@@ -161,10 +165,14 @@ void App::initUI() {
 	connect<Slider<int>, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setDutyCycle, mp_dutyCycleSlider->onValueChanged);
 
 
-	mp_enableOscCheckBox = new CheckBox(mp_window, L"Enable Oscilloscope", mp_osc->isOscEnabled());
-	mp_enableSigGenCheckBox->setMargin(10.0f);
-	mp_enableSigGenCheckBox->setPadding(10.0f);
-	connect<CheckBox, Oscilloscope, bool>(mp_osc, &Oscilloscope::enableOscilloscope, mp_enableOscCheckBox->onStateChanged);
+	mp_enableOscLabel = new Label(mp_window, L"Oscilloscope");
+	mp_enableOscLabel->setMargin(10.0f);
+	mp_enableOscLabel->setPadding(10.0f);
+
+	mp_enableOscButton = new StateButton(mp_window, std::vector<std::wstring>({ L"Stop", L"Run"}));
+	mp_enableOscButton->setMargin(10.0f);
+	mp_enableOscButton->setPadding(10.0f);
+	connect<StateButton, Oscilloscope, int>(mp_osc, &Oscilloscope::enableOscilloscope, mp_enableOscButton->onStateChanged);
 
 
 	mp_aquisitionModeLabel = new Label(mp_window, L"Aquisition Mode");
@@ -192,7 +200,8 @@ void App::initUI() {
 	mp_oscLayout = new GridLayout(mp_window, 3, 2);
 	mp_freqResponseLayout = new GridLayout(mp_window, 4, 2);
 
-	mp_sigGenLayout->addFrame(mp_enableSigGenCheckBox, 0, 0);
+	mp_sigGenLayout->addFrame(mp_enableSigGenLabel, 0, 0);
+	mp_sigGenLayout->addFrame(mp_enableSigGenButton, 0, 1);
 	mp_sigGenLayout->addFrame(mp_waveformLabel, 1, 0);
 	mp_sigGenLayout->addFrame(mp_waveformComboBox, 1, 1);
 	mp_sigGenLayout->addFrame(mp_frequencyLabel, 2, 0);
@@ -202,7 +211,8 @@ void App::initUI() {
 	mp_sigGenLayout->addFrame(mp_dutyCycleLabel, 4, 0);
 	mp_sigGenLayout->addFrame(mp_dutyCycleSlider, 4, 1);
 
-	mp_oscLayout->addFrame(mp_enableOscCheckBox, 0, 0);
+	mp_oscLayout->addFrame(mp_enableOscLabel, 0, 0);
+	mp_oscLayout->addFrame(mp_enableOscButton, 0, 1);
 	mp_oscLayout->addFrame(mp_aquisitionModeLabel, 1, 0);
 	mp_oscLayout->addFrame(mp_aquisitionModeComboBox, 1, 1);
 	mp_oscLayout->addFrame(mp_triggerLevelLabel, 2, 0);
@@ -227,21 +237,22 @@ void App::initUI() {
 	mp_parameterLayout = new LinearLayout(mp_window, Orientation::Vertical);
 	mp_parameterLayout->setFillMode(FillMode::Shrink);
 
-	mp_plotLayout = new GridLayout(mp_window, 2, 2);
-	mp_plotLayout->setFillMode(FillMode::Expand);
+	mp_vertPlotLayout = new LinearLayout(mp_window, Orientation::Vertical);
+
+	mp_horPlotLayout = new LinearLayout(mp_window, Orientation::Horizontal);
 
 
 	// add to Layouts
-	mp_plotLayout->addFrame(mp_sigGenPlot, 0, 0);
-	mp_plotLayout->addFrame(mp_oscPlot, 0, 1);
-	mp_plotLayout->addFrame(mp_bodeMagnitude, 1, 0);
-	mp_plotLayout->addFrame(mp_bodePhase, 1, 1);
+	mp_vertPlotLayout->addFrame(mp_oscPlot);
+	mp_vertPlotLayout->addFrame(mp_horPlotLayout);
+	mp_horPlotLayout->addFrame(mp_sigGenPlot);
+	mp_horPlotLayout->addFrame(mp_bode);
 
 	mp_parameterLayout->addFrame(mp_sigGenGroup);
 	mp_parameterLayout->addFrame(mp_oscGroup);
 	mp_parameterLayout->addFrame(mp_freqResponseGroup);
 
-	mp_mainLayout->addFrame(mp_plotLayout);
+	mp_mainLayout->addFrame(mp_vertPlotLayout);
 	mp_mainLayout->addFrame(mp_parameterLayout);
 
 	// set main layout
