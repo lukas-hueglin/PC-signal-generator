@@ -11,6 +11,9 @@ ComboBox::ComboBox(Window* p_parent, std::vector<std::wstring> elements, WidgetS
 void ComboBox::setState(int state) {
 
 	m_state = state;
+	m_text = m_elements.at(m_state);
+
+	// request redraw
 	requestRedraw();
 
 	EMIT(onStateChanged, m_state);
