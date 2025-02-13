@@ -39,3 +39,13 @@ void StateButton::onMouseRelease(Math::Point2D point) {
 
 	EMIT(onStateChanged, m_state);
 }
+
+void StateButton::setState(int state) {
+
+	m_state = state;
+}
+
+int StateButton::getState() {
+
+	return m_state;
+}

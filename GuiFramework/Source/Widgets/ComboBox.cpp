@@ -2,10 +2,20 @@
 #include "Widgets/ComboBox.h"
 #include "Widgets/DropDown.h"
 
-ComboBox::ComboBox(Window* p_parent, std::vector<std::wstring> elements, WidgetStyle style) : Button(p_parent, elements.at(0), style), m_active(0), m_elements(elements), m_style(style) {
+ComboBox::ComboBox(Window* p_parent, std::vector<std::wstring> elements, WidgetStyle style) : Button(p_parent, elements.at(0), style), m_state(0), m_elements(elements), m_style(style) {
 
 	// connect in such a way, that a dropdown is created, when the button is clicked
 	connect<ComboBox, ComboBox>(this, &ComboBox::createDropDown, onButtonClick);
+}
+
+void ComboBox::setState(int state) {
+
+	m_state = state;
+}
+
+int ComboBox::getState() {
+
+	return m_state;
 }
 
 void ComboBox::createDropDown() {
@@ -22,13 +32,13 @@ void ComboBox::createDropDown() {
 
 void ComboBox::closeDropDown(int index) {
 
-	if (m_active != index) {
+	if (m_state != index) {
 
-		m_active = index;
+		m_state = index;
 		m_text = m_elements.at(index);
 
 		// emit on value changed signal
-		EMIT(onValueChanged, m_active)
+		EMIT(onValueChanged, m_state)
 	}
 
 	requestRedraw();

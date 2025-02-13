@@ -22,5 +22,8 @@ public:
 
 	void onMouseRelease(Math::Point2D point) override;
 
+	void setState(int state);
+	int getState();
+
 	Signal<int> onStateChanged;
 };

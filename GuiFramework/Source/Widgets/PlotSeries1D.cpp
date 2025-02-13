@@ -17,29 +17,12 @@ PlotSeries1D::PlotSeries1D(Plot* p_parent, float* pa_data, float lower, float up
 
 void PlotSeries1D::onUpdate() {
 
-	// create Point2D vector
-	std::vector<Math::Point2D> points;
-
-	// calculate step
-	float step = (m_upperBound - m_lowerBound) / m_size;
-
-	for (int i = 0; i < m_size; ++i) {
-
-		// calculate index for rolling buffer
-		int index = (m_head + i) % m_size;
-
-		Math::Point2D point = mp_parent->plotToScreenSpace(Math::Point2D(m_lowerBound + step * i, mpa_data[index]));
-
-		points.push_back(point);
-	}
-
-	// draw polygon
-	m_plotSeries1DImpl.onUpdate(&points);
+	m_plotSeries1DImpl.onUpdate(mpa_data, m_size, m_head, m_lowerBound, m_upperBound);
 }
 
 void PlotSeries1D::onPaint(Math::Rect& available) {
 
-	m_plotSeries1DImpl.onPaint(available, m_fillArea);
+	m_plotSeries1DImpl.onPaint(available, mp_parent->getPlotBounds(), m_fillArea);
 }
 
 void PlotSeries1D::setColor(Color color) {

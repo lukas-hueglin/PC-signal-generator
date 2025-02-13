@@ -16,9 +16,9 @@ public:
 	~Win32PlotSeries1DImpl();
 
 public:
-	void onUpdate(std::vector<Math::Point2D>* p_points) override;
+	void onUpdate(float* pa_data, int size, int head, float lowerBound, float upperBound) override;
 
-	void onPaint(Math::Rect& availableRect, bool fillArea) override;
+	void onPaint(Math::Rect availableRect, Math::Rect plotBounds, bool fillArea) override;
 
 	void setColor(Color color) override;
 
