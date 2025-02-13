@@ -41,6 +41,8 @@ bool CheckBox::getState() {
 void CheckBox::setState(bool state) {
 
 	m_state = state;
+	requestRedraw();
+
 	EMIT(onStateChanged, m_state);
 }
 
@@ -49,6 +51,6 @@ void CheckBox::onMouseRelease(Math::Point2D point) {
 	// call parent first, then call connected function
 	Widget::onMouseRelease(point);
 
-		m_state = !m_state;
-		EMIT(onStateChanged, m_state);
+	m_state = !m_state;
+	EMIT(onStateChanged, m_state);
 }

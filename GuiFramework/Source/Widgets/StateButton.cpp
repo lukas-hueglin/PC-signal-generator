@@ -43,6 +43,8 @@ void StateButton::onMouseRelease(Math::Point2D point) {
 void StateButton::setState(int state) {
 
 	m_state = state;
+	requestRedraw();
+
 	EMIT(onStateChanged, m_state);
 }
 
