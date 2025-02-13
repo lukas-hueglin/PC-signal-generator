@@ -117,6 +117,7 @@ void App::initUI() {
 	mp_enableSigGenLabel->setPadding(10.0f);
 
 	mp_enableSigGenButton = new StateButton(mp_window, std::vector<std::wstring>({ L"Off", L"On"}));
+	mp_enableSigGenButton->setState(mp_sigGen->isOutputEnabled());
 	mp_enableSigGenButton->setMargin(10.0f);
 	mp_enableSigGenButton->setPadding(10.0f);
 	connect<StateButton, SignalGenerator, int>(mp_sigGen, &SignalGenerator::enableOutput, mp_enableSigGenButton->onStateChanged);
@@ -127,9 +128,10 @@ void App::initUI() {
 	mp_waveformLabel->setPadding(10.0f);
 
 	mp_waveformComboBox = new ComboBox(mp_window, std::vector<std::wstring>({ L"Sine", L"Rectangular", L"Triangle", L"Sawtooth" }));
+	mp_waveformComboBox->setState(mp_sigGen->getWaveformType());
 	mp_waveformComboBox->setMargin(10.0f);
 	mp_waveformComboBox->setPadding(10.0f);
-	connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->onValueChanged);
+	connect<ComboBox, SignalGenerator, int>(mp_sigGen, &SignalGenerator::setWaveformType, mp_waveformComboBox->onStateChanged);
 
 
 	mp_frequencyLabel = new Label(mp_window, L"Frequency");
@@ -170,6 +172,7 @@ void App::initUI() {
 	mp_enableOscLabel->setPadding(10.0f);
 
 	mp_enableOscButton = new StateButton(mp_window, std::vector<std::wstring>({ L"Stop", L"Run"}));
+	mp_enableOscButton->setState(mp_osc->isOscEnabled());
 	mp_enableOscButton->setMargin(10.0f);
 	mp_enableOscButton->setPadding(10.0f);
 	connect<StateButton, Oscilloscope, int>(mp_osc, &Oscilloscope::enableOscilloscope, mp_enableOscButton->onStateChanged);
@@ -180,9 +183,10 @@ void App::initUI() {
 	mp_aquisitionModeLabel->setPadding(10.0f);
 
 	mp_aquisitionModeComboBox = new ComboBox(mp_window, std::vector<std::wstring>({ L"Trigger", L"Rolling" }));
+	mp_aquisitionModeComboBox->setState(mp_osc->getAquisitionMode());
 	mp_aquisitionModeComboBox->setMargin(10.0f);
 	mp_aquisitionModeComboBox->setPadding(10.0f);
-	connect<ComboBox, Oscilloscope, int>(mp_osc, &Oscilloscope::setAquisitionMode, mp_aquisitionModeComboBox->onValueChanged);
+	connect<ComboBox, Oscilloscope, int>(mp_osc, &Oscilloscope::setAquisitionMode, mp_aquisitionModeComboBox->onStateChanged);
 
 
 	mp_triggerLevelLabel = new Label(mp_window, L"Trigger Level");

@@ -5,7 +5,7 @@
 #include <numbers>
 #include <assert.h>
 
-#define REFTIMES_PER_SEC 1000000
+#define REFTIMES_PER_SEC 5000000
 
 const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
 const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
