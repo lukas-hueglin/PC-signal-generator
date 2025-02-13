@@ -11,6 +11,7 @@ ComboBox::ComboBox(Window* p_parent, std::vector<std::wstring> elements, WidgetS
 void ComboBox::setState(int state) {
 
 	m_state = state;
+	EMIT(onStateChanged, m_state);
 }
 
 int ComboBox::getState() {
@@ -38,7 +39,7 @@ void ComboBox::closeDropDown(int index) {
 		m_text = m_elements.at(index);
 
 		// emit on value changed signal
-		EMIT(onValueChanged, m_state)
+		EMIT(onStateChanged, m_state)
 	}
 
 	requestRedraw();

@@ -8,7 +8,7 @@ private:
 	HWND m_hWnd;
 
 protected:
-	ID2D1Factory* mp_2DFactory;
+	ID2D1Factory1* mp_2DFactory;
 	IDWriteFactory* mp_writeFactory;
 
 	ID2D1HwndRenderTarget* mp_renderTarget;
@@ -33,7 +33,7 @@ public:
 private:
 	void initGraphicsAssets();
 
-	ID2D1Factory* get2DFactory();
+	ID2D1Factory1* get2DFactory();
 	ID2D1HwndRenderTarget* getRenderTarget();
 	IDWriteFactory* getWriteFactory();
 

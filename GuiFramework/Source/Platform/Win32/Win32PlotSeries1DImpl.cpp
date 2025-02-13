@@ -30,7 +30,7 @@ void Win32PlotSeries1DImpl::onUpdate(float* pa_data, int size, int head, float l
 
 	// get render target and 2d factory
 	ID2D1HwndRenderTarget* p_renderTarget = mp_graphics->getRenderTarget();
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	// create triangle
 	ID2D1GeometrySink* p_edgeSink;
@@ -40,7 +40,7 @@ void Win32PlotSeries1DImpl::onUpdate(float* pa_data, int size, int head, float l
 	if (p_renderTarget != nullptr && p_2DFactory != nullptr) {
 
 		// create new path geometry
-		ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+		ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 
 		// create path geometry
@@ -115,7 +115,7 @@ void Win32PlotSeries1DImpl::onPaint(Math::Rect availableRect, Math::Rect plotBou
 			p_renderTarget->PushAxisAlignedClip(Win32Utils::D2D1Rect(plotBounds), D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
 			// draw
-			p_renderTarget->DrawGeometry(mp_edgePathGeometry, mp_edgeBrush, 1 / sqrtf(-scaleX * scaleY));
+			p_renderTarget->DrawGeometry(mp_edgePathGeometry, mp_edgeBrush, 1.0f, mp_strokeStyle);
 
 			if (fillArea) {
 				p_renderTarget->FillGeometry(mp_fillPathGeometry, mp_fillBrush);
@@ -146,13 +146,26 @@ void Win32PlotSeries1DImpl::initGraphicsResources() {
 
 	// get render target and 2d factory
 	ID2D1HwndRenderTarget* p_renderTarget = mp_graphics->getRenderTarget();
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	if (p_renderTarget != nullptr && p_2DFactory != nullptr) {
 
 		// Create brush
 		p_renderTarget->CreateSolidColorBrush(Win32Utils::D2D1Color(m_color), &mp_edgeBrush);
 		p_renderTarget->CreateSolidColorBrush(Win32Utils::D2D1Color(m_color), &mp_fillBrush);
+
+		// create stoke style
+		p_2DFactory->CreateStrokeStyle(
+			D2D1::StrokeStyleProperties1(
+				D2D1_CAP_STYLE_FLAT,
+				D2D1_CAP_STYLE_FLAT,
+				D2D1_CAP_STYLE_FLAT,
+				D2D1_LINE_JOIN_MITER,
+				10.0f,
+				D2D1_DASH_STYLE_SOLID,
+				0.0f, D2D1_STROKE_TRANSFORM_TYPE_FIXED
+			),
+			nullptr, 0, &mp_strokeStyle);
 
 		// set opacity of fill brush
 		mp_fillBrush->SetOpacity(0.2);

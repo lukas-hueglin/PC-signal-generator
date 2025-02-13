@@ -37,7 +37,7 @@ void Win32PlotImpl::onResize(Math::Rect plotRect, Math::Rect legendRect) {
 	}
 
 	// create new path geometry
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	if (p_2DFactory != nullptr) {
 
@@ -179,7 +179,7 @@ void Win32PlotImpl::drawArrow(Math::Point2D a, Math::Point2D b, float size) {
 
 	// get render target and 2d factory
 	ID2D1HwndRenderTarget* p_renderTarget = mp_graphics->getRenderTarget();
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	// create triangle
 	ID2D1GeometrySink* p_sink;
@@ -233,7 +233,7 @@ void Win32PlotImpl::initGraphicsResources() {
 	// get render target and 2d factory
 	ID2D1HwndRenderTarget* p_renderTarget = mp_graphics->getRenderTarget();
 	IDWriteFactory* p_writeFactory = mp_graphics->getWriteFactory();
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	if (p_renderTarget != nullptr && p_writeFactory != nullptr && p_2DFactory != nullptr) {
 

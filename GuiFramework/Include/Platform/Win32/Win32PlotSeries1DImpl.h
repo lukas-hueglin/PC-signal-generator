@@ -8,6 +8,8 @@ private:
 	ID2D1SolidColorBrush* mp_edgeBrush;
 	ID2D1SolidColorBrush* mp_fillBrush;
 
+	ID2D1StrokeStyle1* mp_strokeStyle;
+
 	ID2D1PathGeometry* mp_edgePathGeometry;
 	ID2D1PathGeometry* mp_fillPathGeometry;
 

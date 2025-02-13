@@ -41,6 +41,7 @@ bool CheckBox::getState() {
 void CheckBox::setState(bool state) {
 
 	m_state = state;
+	EMIT(onStateChanged, m_state);
 }
 
 void CheckBox::onMouseRelease(Math::Point2D point) {

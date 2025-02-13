@@ -17,7 +17,7 @@ public:
 	void setState(int state);
 	int getState();
 
-	Signal<int> onValueChanged;
+	Signal<int> onStateChanged;
 
 private:
 	void createDropDown();

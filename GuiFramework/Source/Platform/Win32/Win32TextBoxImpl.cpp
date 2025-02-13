@@ -94,7 +94,7 @@ void Win32TextBoxImpl::onResize(Math::Rect hitboxRect, Math::Rect contentRect) {
 	}
 
 	// create new path geometry
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 
 	if (p_2DFactory != nullptr) {
 
@@ -171,7 +171,7 @@ void Win32TextBoxImpl::initGraphicsResources() {
 
 	// get render target and 2d factory
 	ID2D1HwndRenderTarget* p_renderTarget = mp_graphics->getRenderTarget();
-	ID2D1Factory* p_2DFactory = mp_graphics->get2DFactory();
+	ID2D1Factory1* p_2DFactory = mp_graphics->get2DFactory();
 	IDWriteFactory* p_writeFactory = mp_graphics->getWriteFactory();
 
 	if (p_renderTarget != nullptr && p_2DFactory != nullptr && p_writeFactory != nullptr) {
